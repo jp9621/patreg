@@ -14,7 +14,7 @@ X = data.iloc[:, 1:].values  # Features (excluding the first column)
 y = data.iloc[:, 0].values    # Target variable (first column)
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.99, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Standardize features
 scaler = StandardScaler()

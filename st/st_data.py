@@ -2,18 +2,17 @@ import numpy as np
 import random
 
 def filler(pattern):
-    new_pattern = [pattern[0]]  # Start with the first data point
-    for i in range(len(pattern) - 1):
-        start_val = pattern[i]
-        end_val = pattern[i + 1]
-        num_fillers = 2
-        
-        # Generate filler values between start_val and end_val
+    new_pattern = [pattern[0]]  # Start with the first element (validity)
+    num_fillers = 2
+    for i in range(1, len(pattern) - 1):
+        new_pattern.append(pattern[i])  # Add the original data point
+        # Generate filler values between the current data point and the next one
         for _ in range(num_fillers):
-            filler_val = random.uniform(start_val, end_val)
+            filler_val = random.uniform(pattern[i], pattern[i+1])
             new_pattern.append(filler_val)
-        
+    new_pattern.append(pattern[-1])  # Add the last element
     return new_pattern
+
 
 
 def upFiller(pattern, upperLimit):
@@ -48,20 +47,21 @@ def generate_pattern(validity):
         # Ensure p3 and p4 are within the range [0, p1]
         p3 = min(max(0, p3), p1)
         p4 = min(max(0, p4), p1)
-        pattern1 = filler([validity, p1, p2])
+        pattern1 = [validity, p1, p2]
         pattern2 = upFiller([p3,p4], p1)
-        final_pattern = pattern1 + pattern2
+        final_pattern = filler(pattern1 + pattern2)
+        print(len(final_pattern))
         return final_pattern
     
     if not validity:
-        final_pattern = []
-        for _ in range(13):
+        final_pattern = [validity]
+        for _ in range(10):
             final_pattern.append(random.uniform(0,100))
         return final_pattern
 
 
 
-num_patterns = 5
+num_patterns = 100000
 patterns = []
 for _ in range(num_patterns):
     patterns.append(generate_pattern(True))
